@@ -1,0 +1,29 @@
+name: Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test cowsay example
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v30
+
+      - name: Build container image
+        run: nix build -L --option sandbox relaxed .#cowsay-example
+
+      - name: Import container image
+        run: docker load -i ./result/cowsay.tar
+
+      - name: Run container
+        run: docker run cowsay:test /usr/games/cowthink "It works !"
