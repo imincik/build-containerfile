@@ -12,18 +12,28 @@
     {
       buildContainerFile = import ./build-containerfile.nix;
 
-      packages.x86_64-linux.cowsay-example = self.buildContainerFile
-        {
-          inherit pkgs;
-          name = "cowsay";
-          tag = "test";
-          script = ''
-            FROM debian:12-slim
-            ARG MESSAGE=none
-            RUN apt-get update && apt-get install -y cowsay
-            RUN /usr/games/cowthink ''${MESSAGE}
-          '';
-          extraArgs = [ "--build-arg MESSAGE='Image is ready !'" ];
-        };
+      packages.x86_64-linux = {
+        cowsay-example = self.buildContainerFile
+          {
+            inherit pkgs;
+            name = "cowsay";
+            tag = "test";
+            script = ''
+              FROM debian:12-slim
+              ARG MESSAGE=none
+              RUN apt-get update && apt-get install -y cowsay
+              RUN /usr/games/cowthink ''${MESSAGE}
+            '';
+            extraArgs = [ "--build-arg MESSAGE='Image is ready !'" ];
+          };
+
+        sl-example = self.buildContainerFile
+          {
+            inherit pkgs;
+            name = "sl";
+            tag = "test";
+            script = builtins.readFile ./Dockerfile;
+          };
+      };
     };
 }

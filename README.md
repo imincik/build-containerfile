@@ -28,6 +28,23 @@ lightweight VM with Nix sandbox relaxed to enable Internet access.
                   ||     ||
 ```
 
+## Sl example
+
+* Build container image
+
+```bash
+  nix build --option sandbox relaxed --builders "" github:imincik/containerfile-nix#sl-example
+```
+
+* Run container with podman
+
+```bash
+  podman load -i ./result/sl.tar
+  podman run localhost/sl:test
+
+  Enjoy the train ...
+```
+
 ## Usage
 
 Check out [flake.nix](flake.nix) file.
