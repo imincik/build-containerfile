@@ -10,6 +10,8 @@
   # List of extra arguments passed to image build command
   # Example: [ "--build-arg VAR='xyz'" ]
 , extraArgs ? []
+  # Amount of memory assigned to VM
+, vmMemorySize ? 2048
 }:
 
 let
@@ -23,7 +25,7 @@ in
 pkgs.vmTools.runInLinuxVM (
   pkgs.runCommand "build-container-file"
   {
-    memSize = 4096;
+    memSize = vmMemorySize;
     # QEMU_OPTS = "-nic user,model=virtio-net-pci";
     QEMU_OPTS = "-netdev user,id=net0 -device virtio-net-pci,netdev=net0";
 
