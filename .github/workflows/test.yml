@@ -26,4 +26,4 @@ jobs:
         run: docker load -i ./result/cowsay.tar
 
       - name: Run container
-        run: docker run cowsay:test /usr/games/cowthink "It works !"
+        run: docker run localhost/cowsay:test /usr/games/cowthink "It works !"
