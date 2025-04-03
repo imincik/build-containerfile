@@ -1,8 +1,8 @@
 # Build Dockerfile/Containerfile with Nix
 
-`buildContainerFile` is a Nix function which is able to build an OCI image from
-your `Dockerfile` or `Containerfile`. Build is performed in a super lightweight
-VM with Nix sandbox relaxed to enable Internet access.
+`buildContainerFile` is a Nix function to build an OCI container image from
+your `Dockerfile` or `Containerfile` script. Build is performed in a super
+lightweight VM with Nix sandbox relaxed to enable Internet access.
 
 
 ## Cowsay example
@@ -27,3 +27,7 @@ VM with Nix sandbox relaxed to enable Internet access.
                   ||----w |
                   ||     ||
 ```
+
+## Usage
+
+Check out [flake.nix](flake.nix) file.
