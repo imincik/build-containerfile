@@ -47,6 +47,6 @@ pkgs.vmTools.runInLinuxVM (
 
     mkdir $out
     podman build --tag ${name}:${tag} --file ${containerFile} ${extraArgs} ${buildContext}
-    podman save localhost/${name}:${tag} --format oci-archive --output $out/${name}.tar
+    podman save localhost/${name}:${tag} --format docker-archive --output $out/${name}.tar
   ''
 )
