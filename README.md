@@ -7,7 +7,7 @@ lightweight VM with Nix sandbox relaxed to enable Internet access.
 
 ## Cowsay example
 
-* Build container image
+* Build container image from [Containerfile script](flake.nix)
 
 ```bash
   nix build --option sandbox relaxed --builders "" github:imincik/containerfile-nix#cowsay-example
@@ -30,7 +30,7 @@ lightweight VM with Nix sandbox relaxed to enable Internet access.
 
 ## Sl example
 
-* Build container image
+* Build container image from [Dockerfile](Dockerfile)
 
 ```bash
   nix build --option sandbox relaxed --builders "" github:imincik/containerfile-nix#sl-example
