@@ -23,7 +23,7 @@ in
 pkgs.vmTools.runInLinuxVM (
   pkgs.runCommand "build-container-file"
   {
-    memSize = 2048;
+    memSize = 4096;
     # QEMU_OPTS = "-nic user,model=virtio-net-pci";
     QEMU_OPTS = "-netdev user,id=net0 -device virtio-net-pci,netdev=net0";
 
