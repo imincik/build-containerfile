@@ -19,8 +19,11 @@
           tag = "test";
           script = ''
             FROM debian:12-slim
+            ARG MESSAGE=none
             RUN apt-get update && apt-get install -y cowsay
+            RUN /usr/games/cowthink ''${MESSAGE}
           '';
+          extraArgs = [ "--build-arg MESSAGE='Image is ready !'" ];
         };
     };
 }

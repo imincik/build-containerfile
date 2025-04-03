@@ -2,7 +2,7 @@
 
 `buildContainerFile` is a Nix function which is able to build an OCI image from
 your `Dockerfile` or `Containerfile`. Build is performed in a super lightweight
-VM with internet access enabled.
+VM with Nix sandbox relaxed to enable Internet access.
 
 
 ## Cowsay example

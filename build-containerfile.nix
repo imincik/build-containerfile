@@ -1,9 +1,15 @@
 { pkgs
+  # Resulting image name
 , name ? "image"
+  # Resulting image tag
 , tag ? "latest"
+  # Dockerfile/Container file content
 , script ? ""
+  # Build context
 , buildContext ? ""
-, extraArgs ? ""
+  # List of extra arguments passed to image build command
+  # Example: [ "--build-arg VAR='xyz'" ]
+, extraArgs ? []
 }:
 
 let
@@ -46,7 +52,7 @@ pkgs.vmTools.runInLinuxVM (
     install -Dm555 ${registriesConf} ~/.config/containers/registries.conf
 
     mkdir $out
-    podman build --tag ${name}:${tag} --file ${containerFile} ${extraArgs} ${buildContext}
+    podman build --tag ${name}:${tag} --file ${containerFile} ${builtins.concatStringsSep " " extraArgs} ${buildContext}
     podman save localhost/${name}:${tag} --format docker-archive --output $out/${name}.tar
   ''
 )
