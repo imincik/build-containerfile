@@ -20,6 +20,7 @@
 , extraArgs ? [ ]
 
   # Memory size in MB assigned to VM.
+  # Half of the memory is alocated to tmpfs mounts.
 , vmMemorySize ? 2048
 
   # Size of disk in MB mounted to /var/lib in VM.
@@ -87,5 +88,8 @@ pkgs.vmTools.runInLinuxVM (
     mkdir $out
     podman build --tag ${name}:${tag} --file ${containerFile} ${builtins.concatStringsSep " " extraArgs} ${buildContext}
     podman save localhost/${name}:${tag} --format docker-archive --output $out/${name}.tar
+
+    echo "Free space on /var/lib disk ..."
+    df -h /var/lib
   ''
 )
