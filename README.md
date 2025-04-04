@@ -40,7 +40,7 @@ lightweight VM with Nix sandbox relaxed to enable Internet access.
 
 ```bash
   podman load -i ./result/sl.tar
-  podman run localhost/sl:test
+  podman run -t localhost/sl:test
 
   Enjoy the train ...
 ```
