@@ -1,17 +1,30 @@
 { pkgs
-  # Resulting image name
+
+  # Resulting image name.
 , name ? "image"
-  # Resulting image tag
+
+  # Resulting image tag.
 , tag ? "latest"
-  # Dockerfile/Container file content
+
+  # Dockerfile/Container file content.
+  # Example:
+  # FROM debian:12-slim
+  # RUN apt-get update && apt-get install -y cowsay
 , script ? ""
-  # Build context
+
+  # Build context.
 , buildContext ? ""
-  # List of extra arguments passed to image build command
+
+  # List of extra arguments passed to image build command.
   # Example: [ "--build-arg VAR='xyz'" ]
-, extraArgs ? []
-  # Amount of memory assigned to VM
+, extraArgs ? [ ]
+
+  # Memory size in MB assigned to VM.
 , vmMemorySize ? 2048
+
+  # Size of disk in MB mounted to /var/lib in VM.
+  # If vmDiskSize = 0, no disk is mounted.
+, vmDiskSize ? 4096
 }:
 
 let
@@ -29,8 +42,19 @@ pkgs.vmTools.runInLinuxVM (
     # QEMU_OPTS = "-nic user,model=virtio-net-pci";
     QEMU_OPTS = "-netdev user,id=net0 -device virtio-net-pci,netdev=net0";
 
+    preVM =
+      if vmDiskSize > 0 then
+        pkgs.vmTools.createEmptyImage
+          {
+            size = vmDiskSize;
+            fullName = "var-lib-image";
+            destination = "./var-lib-image";
+          }
+      else false;
+
     nativeBuildInputs = with pkgs; [
       dhcpcd
+      e2fsprogs
       iproute2
       kmod
       podman
@@ -39,6 +63,13 @@ pkgs.vmTools.runInLinuxVM (
 
     __noChroot = true;
   } ''
+    if [ "${toString vmDiskSize}" != "0" ]; then
+      echo "Mounting disk image to /var/lib ..."
+      mkdir /var/lib
+      mkfs.ext4 /dev/${pkgs.vmTools.hd}
+      mount /dev/${pkgs.vmTools.hd} /var/lib
+    fi
+
     mount -t cgroup2 cgroup /sys/fs/cgroup
 
     modprobe virtio_net

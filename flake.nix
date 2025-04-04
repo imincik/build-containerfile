@@ -25,6 +25,8 @@
               RUN /usr/games/cowthink ''${MESSAGE}
             '';
             extraArgs = [ "--build-arg MESSAGE='Image is ready !'" ];
+            vmMemorySize = 1024;
+            vmDiskSize = 2048;
           };
 
         sl-example = self.buildContainerFile
