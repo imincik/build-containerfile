@@ -10,7 +10,7 @@ lightweight VM with Nix sandbox relaxed to enable Internet access.
 * Build container image from [Containerfile script](flake.nix)
 
 ```bash
-  nix build --option sandbox relaxed --builders "" github:imincik/containerfile-nix#cowsay-example
+  nix build -L --option sandbox relaxed --builders "" github:imincik/containerfile-nix#cowsay-example
 ```
 
 * Run container with podman
@@ -33,7 +33,7 @@ lightweight VM with Nix sandbox relaxed to enable Internet access.
 * Build container image from [Dockerfile](Dockerfile)
 
 ```bash
-  nix build --option sandbox relaxed --builders "" github:imincik/containerfile-nix#sl-example
+  nix build -L --option sandbox relaxed --builders "" github:imincik/containerfile-nix#sl-example
 ```
 
 * Run container with podman
