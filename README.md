@@ -47,4 +47,4 @@ lightweight VM with Nix sandbox relaxed to enable Internet access.
 
 ## Usage
 
-Check out [flake.nix](flake.nix) file.
+Check out [build-containerfile.nix](build-containerfile.nix) file.
